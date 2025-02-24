@@ -9,7 +9,7 @@ abstract class SimilarRecipeRemoteDataSource {
 
 class SimilarRecipeRemoteDataSourceImpl extends SimilarRecipeRemoteDataSource {
   final DioClient _dioClient;
-  final String _apiKey = "ba29c5a5826045aba900d1951f71619c";
+  final String _apiKey = "df35d600da754678b7d8619cad0144e7";
 
   SimilarRecipeRemoteDataSourceImpl(this._dioClient);
 

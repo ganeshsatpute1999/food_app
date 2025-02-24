@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
+
 import 'package:food_app/presentation/screen/recipedetailsscreen/bloc/recipe_details_bloc.dart';
+import 'package:food_app/presentation/widgets/bottom_navigation_bar_widget.dart';
 import 'package:food_app/presentation/widgets/dish_type_widget.dart';
 import 'package:food_app/presentation/widgets/recipe_image_widgets.dart';
 import 'package:food_app/presentation/widgets/recipe_info_widget.dart';
@@ -22,7 +24,15 @@ class RecipeDetailScreen extends StatelessWidget {
             'Recipe Details',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.bookmark_rounded, color: Colors.grey),
+              onPressed: () {
+                // context.read<FavoritesBloc>().add(AddFavorite(favoriteRecipe));
+              },
+            ),
+          ],
         ),
         body: BlocBuilder<RecipeDetailsBloc, RecipeDetailsState>(
           builder: (context, state) {
@@ -41,6 +51,7 @@ class RecipeDetailScreen extends StatelessWidget {
                     RecipeInfo(recipe: recipe),
                     const SizedBox(height: 16),
                     DishTypes(dishTypes: recipe.dishTypes),
+                    const SizedBox(height: 16),
                   ],
                 ),
               );
@@ -51,6 +62,7 @@ class RecipeDetailScreen extends StatelessWidget {
             return const Center(child: Text('No Data Available'));
           },
         ),
+        bottomNavigationBar: BottomNavigationBarWidget(),
       ),
     );
   }

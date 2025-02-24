@@ -17,17 +17,20 @@ class RecipeDetailsModel extends RecipeDetailsEntity {
 
   factory RecipeDetailsModel.fromJson(Map<String, dynamic> json) {
     return RecipeDetailsModel(
-      id: json['id'],
-      title: json['title'],
-      image: json['image'],
-      servings: json['servings'],
-      readyInMinutes: json['readyInMinutes'],
-      cookingMinutes: json['cookingMinutes'],
-      preparationMinutes: json['preparationMinutes'],
-      pricePerServing: json['pricePerServing'],
-      vegan: json['vegan'],
-      vegetarian: json['vegetarian'],
-      dishTypes: List<String>.from(json['dishTypes']),
+      id: json['id'] ?? 0,
+      title: json['title'] ?? 'Unknown Title',
+      image: json['image'] ?? '',
+      servings: json['servings'] ?? 1,
+      readyInMinutes: json['readyInMinutes'] ?? 0,
+      cookingMinutes: json['cookingMinutes'] ?? 0,
+      preparationMinutes: json['preparationMinutes'] ?? 0,
+      pricePerServing: (json['pricePerServing'] as num?)?.toDouble() ?? 0.0,
+      vegan: json['vegan'] ?? false,
+      vegetarian: json['vegetarian'] ?? false,
+      dishTypes: (json['dishTypes'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
     );
   }
 }

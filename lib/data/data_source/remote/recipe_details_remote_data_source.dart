@@ -14,7 +14,7 @@ class RecipeDetailsRemoteDataSourceImpl
   @override
   Future<RecipeDetailsModel> getRecipeDetail(int recipeId) async {
     final response = await _dio.get(
-      'https://api.spoonacular.com/recipes/$recipeId/information?apiKey=ba29c5a5826045aba900d1951f71619c',
+      'https://api.spoonacular.com/recipes/$recipeId/information?apiKey=df35d600da754678b7d8619cad0144e7',
     );
     return RecipeDetailsModel.fromJson(response.data);
   }
