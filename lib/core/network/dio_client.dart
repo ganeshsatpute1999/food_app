@@ -7,6 +7,9 @@ class DioClient {
       : dio = Dio(BaseOptions(
           baseUrl: 'https://api.spoonacular.com',
           headers: {'Content-Type': 'application/json'},
-          
         ));
+
+  Dio getDio() {
+    return dio;
+  }
 }
