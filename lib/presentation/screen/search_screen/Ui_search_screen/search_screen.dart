@@ -95,7 +95,7 @@ class SearchScreen extends StatelessWidget {
                           itemCount: state.recipes.length,
                           itemBuilder: (context, index) {
                             final recipe = state.recipes[index];
-
+                           // print(recipe.image);
                             return Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -111,6 +111,14 @@ class SearchScreen extends StatelessWidget {
                                     width: 60,
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        'assets/images/avatar.png',
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
                                   ),
                                 ),
                                 title: Text(

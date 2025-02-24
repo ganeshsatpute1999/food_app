@@ -1,15 +1,15 @@
-import 'package:food_app/domain/entities/recipe_entity.dart';
+import 'package:food_app/domain/entities/favorites_recipe_entity.dart';
 
 
-class RecipeModel extends RecipeEntity {
-  const RecipeModel({
+class FavoritesRecipeModel extends FavoritesRecipeEntity {
+  const FavoritesRecipeModel({
     required super.id,
     required super.title,
     required super.image,
   });
 
-  factory RecipeModel.fromJson(Map<String, dynamic> json) {
-    return RecipeModel(
+  factory FavoritesRecipeModel.fromJson(Map<String, dynamic> json) {
+    return FavoritesRecipeModel(
       id: json['id'],
       title: json['title'],
       image: json['image'],

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/domain/entities/favorites_recipe_entity.dart';
 import 'package:food_app/injection.dart';
-
+import 'package:food_app/presentation/screen/favoritesscreen/bloc/favorites_bloc.dart';
+import 'package:food_app/presentation/screen/favoritesscreen/bloc/favorites_event.dart';
+import 'package:food_app/presentation/screen/favoritesscreen/bloc/favorites_state.dart';
 import 'package:food_app/presentation/screen/recipedetailsscreen/bloc/recipe_details_bloc.dart';
-import 'package:food_app/presentation/widgets/bottom_navigation_bar_widget.dart';
-import 'package:food_app/presentation/widgets/dish_type_widget.dart';
 import 'package:food_app/presentation/widgets/recipe_image_widgets.dart';
 import 'package:food_app/presentation/widgets/recipe_info_widget.dart';
+import 'package:food_app/presentation/widgets/dish_type_widget.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   final int recipeId;
@@ -20,19 +22,8 @@ class RecipeDetailScreen extends StatelessWidget {
         ..add(LoadRecipeDetailEvent(recipeId: recipeId)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Recipe Details',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          title: const Text('Recipe Details'),
           backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.bookmark_rounded, color: Colors.grey),
-              onPressed: () {
-                // context.read<FavoritesBloc>().add(AddFavorite(favoriteRecipe));
-              },
-            ),
-          ],
         ),
         body: BlocBuilder<RecipeDetailsBloc, RecipeDetailsState>(
           builder: (context, state) {
@@ -46,7 +37,53 @@ class RecipeDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    RecipeImage(imageUrl: recipe.image),
+                    Stack(
+                      alignment:
+                          Alignment.topLeft, // ✅ Position button to the left
+                      children: [
+                        RecipeImage(imageUrl: recipe.image),
+                        BlocBuilder<FavoritesBloc, FavoritesState>(
+                          bloc: locator<FavoritesBloc>(),
+                          builder: (context, favState) {
+                            final favoritesBloc = locator<FavoritesBloc>();
+                            final isFav = favoritesBloc.isFavorite(recipe.id);
+
+                            return Positioned(
+                              top: 10,
+                              left: 10, // ✅ Button on the left
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white.withOpacity(0.8),
+                                child: IconButton(
+                                  icon: Icon(
+                                    isFav
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isFav ? Colors.red : Colors.grey,
+                                    size: 28,
+                                  ),
+                                  onPressed: () {
+                                    final favoriteRecipe =
+                                        FavoritesRecipeEntity(
+                                      id: recipe.id,
+                                      title: recipe.title,
+                                      image: recipe.image,
+                                    );
+
+                                    if (isFav) {
+                                      favoritesBloc
+                                          .add(RemoveFavorite(recipe.id));
+                                    } else {
+                                      favoritesBloc
+                                          .add(AddFavorite(favoriteRecipe));
+                                    }
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 16),
                     RecipeInfo(recipe: recipe),
                     const SizedBox(height: 16),
@@ -62,7 +99,6 @@ class RecipeDetailScreen extends StatelessWidget {
             return const Center(child: Text('No Data Available'));
           },
         ),
-        bottomNavigationBar: BottomNavigationBarWidget(),
       ),
     );
   }

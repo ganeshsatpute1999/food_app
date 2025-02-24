@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:food_app/domain/entities/recipe_entity.dart';
+import 'package:food_app/domain/entities/favorites_recipe_entity.dart';
 
 sealed class FavoritesEvent extends Equatable {
   const FavoritesEvent();
@@ -10,8 +10,8 @@ sealed class FavoritesEvent extends Equatable {
 
 final class LoadFavorites extends FavoritesEvent {}
 
-final class AddFavorite extends FavoritesEvent { // ✅ New Event
-  final RecipeEntity recipe;
+final class AddFavorite extends FavoritesEvent {
+  final FavoritesRecipeEntity recipe;
 
   const AddFavorite(this.recipe);
 

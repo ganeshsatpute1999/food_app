@@ -62,20 +62,20 @@ Future<void> init() async {
   locator.registerFactory(() =>
       SearchBloc(getSearchRecipesUsecase: locator<GetSearchRecipesUsecase>()));
 
-  locator.registerLazySingleton<RecipeRemoteDataSource>(
+  locator.registerLazySingleton<FavoritesRecipeRemoteDataSource>(
       () => RecipeRemoteDataSourceImpl(locator<Dio>()));
 
   // 🔹 Register Repositories
-  locator.registerLazySingleton<RecipeRepository>(
-      () => RecipeRepositoryImpl(locator<RecipeRemoteDataSource>()));
+  locator.registerLazySingleton<FavoritesRecipeRepository>(
+      () => FavoritesRepositoryImpl(locator<FavoritesRecipeRemoteDataSource>()));
 
   // 🔹 Register Use Cases
   locator
-      .registerLazySingleton(() => GetFavorites(locator<RecipeRepository>()));
+      .registerLazySingleton(() => GetFavorites(locator<FavoritesRecipeRepository>()));
   locator.registerLazySingleton(
-      () => AddFavoriteUseCase(locator<RecipeRepository>())); // ✅ Correct Order
+      () => AddFavoriteUseCase(locator<FavoritesRecipeRepository>())); // ✅ Correct Order
   locator.registerLazySingleton(
-      () => RemoveFavoriteUseCase(locator<RecipeRepository>()));
+      () => RemoveFavoriteUseCase(locator<FavoritesRecipeRepository>()));
 
   // 🔹 Register BLoC
   locator.registerFactory(() => FavoritesBloc(

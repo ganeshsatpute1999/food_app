@@ -8,7 +8,9 @@ class SearchRecipeModel extends SearchRecipeEntity {
     return SearchRecipeModel(
       id: json["id"],
       title: json["title"],
-      image: json["image"],
+      image: json["image"] != null
+          ? "https://spoonacular.com/recipeImages/${json["id"]}-312x231.jpg"
+          : "https://yourapp.com/assets/images/placeholder.png", // Fallback
     );
   }
 }

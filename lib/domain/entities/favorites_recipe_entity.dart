@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class RecipeEntity extends Equatable {
+class FavoritesRecipeEntity extends Equatable {
   final int id;
   final String title;
   final String image;
 
-  const RecipeEntity({
+  const FavoritesRecipeEntity({
     required this.id,
     required this.title,
     required this.image,
