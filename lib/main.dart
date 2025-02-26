@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
-import 'package:food_app/presentation/screen/homescreen/UI/home_screen.dart';
-import 'package:food_app/presentation/screen/homescreen/bloc/home_bloc.dart';
+import 'package:food_app/presentation/screen/login_screen/ui/login_screen.dart';
 
 Future<void> main() async {
   await init();
@@ -16,10 +14,45 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (context) => locator<HomeBloc>(),
-        child: HomeScreen(),
-      ),
+      home: LoginScreen(),
     );
   }
 }
+
+
+
+// Future<void> main() async {
+//   await init();
+//   runApp(BlocProvider(
+//     create: (context) => locator<LoginBloc>(),
+//     child: MyApp(),
+//   ));
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: LoginScreen(),
+//     );
+//   }
+// }
+
+// Future<void> main() async {
+//   await init();
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: SignUpScreen(),
+//     );
+//   }
+// }

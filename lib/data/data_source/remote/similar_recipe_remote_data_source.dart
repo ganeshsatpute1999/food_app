@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:food_app/core/network/dio_client.dart';
 import 'package:food_app/core/resources/data_state.dart';
@@ -16,8 +18,19 @@ class SimilarRecipeRemoteDataSourceImpl extends SimilarRecipeRemoteDataSource {
   @override
   Future<DataState<List<SimilarRecipeModel>>> getSimilarRecipe() async {
     try {
+      final List<String> recipeids = [
+        "715538",
+        "725538",
+        "785538",
+        "512538",
+        "209128"
+      ];
+      final Random random = Random();
+
+      String selectedItem = recipeids[random.nextInt(recipeids.length)];
+
       final response = await _dioClient.dio.get(
-        '/recipes/715538/similar',
+        '/recipes/$selectedItem/similar',
         queryParameters: {'apiKey': _apiKey},
       );
       if (response.data != null) {

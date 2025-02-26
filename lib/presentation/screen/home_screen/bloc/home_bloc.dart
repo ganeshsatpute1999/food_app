@@ -1,0 +1,63 @@
+import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+import 'package:food_app/domain/entities/random_recipe_entity.dart';
+import 'package:food_app/domain/entities/similar_recipe_entity.dart';
+import 'package:food_app/domain/usecases/get_random_recipe_usecase.dart';
+import 'package:food_app/domain/usecases/get_similar_recipe_usecase.dart';
+
+part 'home_event.dart';
+part 'home_state.dart';
+
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final GetSimilarRecipeUsecase _getSimilarRecipeUsecase;
+  final GetRandomRecipeUsecase _getRandomRecipeUsecase;
+
+  HomeBloc(this._getSimilarRecipeUsecase, this._getRandomRecipeUsecase)
+      : super(HomeInitial()) {
+    on<GetSimilarRecipeEvent>(_getSimilarRecipeEvent);
+    on<GetRandomRecipesEvent>(_getRandomRecipeEvent);
+    on<ChangeTabEvent>(_changeTabEvent);
+  }
+
+  Future<void> _getSimilarRecipeEvent(
+      GetSimilarRecipeEvent event, Emitter<HomeState> emit) async {
+    emit(HomeLoading());
+    try {
+      final result = await _getSimilarRecipeUsecase.call();
+
+      if (result is Left) {
+        final failure = (result as Left).value;
+        emit(HomeFailure(failure.message));
+      } else if (result is Right) {
+        final similarRecipe = (result as Right).value;
+        emit(SimilarRecipeLoaded(similarRecipe));
+      }
+    } catch (e) {
+      emit(HomeFailure(e.toString()));
+    }
+  }
+
+  Future<void> _getRandomRecipeEvent(
+      GetRandomRecipesEvent event, Emitter<HomeState> emit) async {
+    emit(HomeLoading());
+
+    try {
+      final result = await _getRandomRecipeUsecase.call(
+          includeTags: event.includeTags,
+          excludeTags: event.excludeTags,
+          number: event.number);
+
+      result.fold(
+        (failure) => emit(HomeFailure(failure.message)),
+        (randomRecipe) => emit(RandomRecipeLoaded(randomRecipe)),
+      );
+    } catch (e) {
+      emit(HomeFailure(e.toString()));
+    }
+  }
+
+  void _changeTabEvent(ChangeTabEvent event, Emitter<HomeState> emit) async {
+    emit(HomeTabChanged(event.index));
+  }
+}

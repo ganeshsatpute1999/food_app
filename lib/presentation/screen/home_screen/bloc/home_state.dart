@@ -30,8 +30,26 @@ final class SimilarRecipeLoaded extends HomeState {
   );
 }
 
+final class RandomRecipeLoaded extends HomeState {
+  final List<RandomRecipeEntity> randomrecipes;
+
+  const RandomRecipeLoaded(this.randomrecipes);
+
+  @override
+  List<Object> get props => [randomrecipes];
+}
+
 final class HomeFailure extends HomeState {
   final String error;
 
   const HomeFailure(this.error);
+}
+
+final class HomeTabChanged extends HomeState {
+  final int selectedIndex;
+
+  const HomeTabChanged(this.selectedIndex);
+
+  @override
+  List<Object> get props => [selectedIndex];
 }
