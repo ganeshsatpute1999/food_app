@@ -5,8 +5,6 @@ import 'package:food_app/presentation/screen/favorites_screen/UI/favorites_scree
 import 'package:food_app/presentation/screen/home_screen/bloc/home_bloc.dart';
 import 'package:food_app/presentation/screen/profile_screen/UI/profile_screen.dart';
 import 'package:food_app/presentation/screen/recipe_details_screen/UI/recipedetailsscreen.dart';
-import 'package:food_app/presentation/screen/search_screen/Ui/search_screen.dart';
-import 'package:food_app/presentation/widgets/side_drawer_widget.dart';
 import 'package:food_app/presentation/widgets/bottom_navigation_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -145,10 +143,9 @@ class HomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => RecipeDetailScreen(
-                                  recipeId: _similarRecipe.id,
-                                ),
+                            builder: (context) => RecipeDetailScreen(
+                              recipeId: _similarRecipe.id,
+                            ),
                           ),
                         );
                       },
@@ -164,7 +161,9 @@ class HomeScreen extends StatelessWidget {
         return const SizedBox();
       },
     ),
-    FavoritesScreen(num: 0,),
+    FavoritesScreen(
+      num: 0,
+    ),
   ];
 
   @override
@@ -211,10 +210,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body:
-                selectedIndex == 0
-                    ? pages[0]
-                    : pages[1], // Ensure correct page is displayed
+            body: selectedIndex == 0
+                ? pages[0]
+                : pages[1], // Ensure correct page is displayed
             bottomNavigationBar: BottomNavigationWidget(selectedIndex),
           );
         },

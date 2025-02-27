@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/presentation/screen/home_screen/UI/home_screen.dart';
 import 'package:food_app/presentation/screen/profile_screen/UI/profile_screen.dart';
 import 'package:food_app/presentation/screen/recipe_details_screen/UI/recipedetailsscreen.dart';
-import 'package:food_app/presentation/widgets/side_drawer_widget.dart';
 
 List<Map<String, dynamic>> favorites = [];
 
