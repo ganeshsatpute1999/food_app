@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
-import 'package:food_app/presentation/screen/homescreen/UI/home_screen.dart';
-import 'package:food_app/presentation/screen/login_screen/UI/login_screen.dart';
+import 'package:food_app/presentation/screen/home_screen/UI/home_screen.dart';
 import 'package:food_app/presentation/screen/login_screen/bloc/login_bloc.dart';
 import 'package:food_app/presentation/screen/profile_screen/UI/profile_screen.dart';
 import 'package:food_app/presentation/screen/search_screen/Ui/search_screen.dart';
-import 'package:food_app/presentation/widgets/login_button_widget.dart';
 import 'package:food_app/presentation/widgets/logout_button_widget.dart';
 
 class SideDrawerWidget extends StatelessWidget {

@@ -12,10 +12,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc(this._getSimilarRecipeUsecase) : super(HomeInitial()) {
     on<GetSimilarRecipeEvent>(_getSimilarRecipeEvent);
+    on<ChangeTabEvent>(_changeTabEvent);
   }
 
   Future<void> _getSimilarRecipeEvent(
-      GetSimilarRecipeEvent event, Emitter<HomeState> emit) async {
+    GetSimilarRecipeEvent event,
+    Emitter<HomeState> emit,
+  ) async {
     emit(HomeLoading());
     try {
       final result = await _getSimilarRecipeUsecase.call();
@@ -30,5 +33,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       emit(HomeFailure(e.toString()));
     }
+  }
+
+  void _changeTabEvent(ChangeTabEvent event, Emitter<HomeState> emit) async {
+    emit(HomeTabChanged(event.index));
   }
 }

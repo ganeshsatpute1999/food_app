@@ -41,7 +41,6 @@ dependencies:
   flutter_bloc: ^9.0.0
   imagebutton: ^1.0.0
   dartz: ^0.10.1
- 
 
 dev_dependencies:
   flutter_test:

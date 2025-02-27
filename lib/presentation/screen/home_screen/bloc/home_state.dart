@@ -30,8 +30,19 @@ final class SimilarRecipeLoaded extends HomeState {
   );
 }
 
+
+
 final class HomeFailure extends HomeState {
   final String error;
 
   const HomeFailure(this.error);
+}
+
+final class HomeTabChanged extends HomeState {
+  final int selectedIndex;
+
+  const HomeTabChanged(this.selectedIndex);
+
+  @override
+  List<Object> get props => [selectedIndex];
 }

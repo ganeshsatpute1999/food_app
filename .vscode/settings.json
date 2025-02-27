@@ -5,12 +5,21 @@
     "dartz",
     "favoritesscreen",
     "homescreen",
+    "Hrishikesh",
     "imagebutton",
+<<<<<<< HEAD
+    "Kedar",
+    "randomrecipes",
+    "recipedetailsscreen",
+    "recipeids",
+=======
     "loginscreen",
     "Recipedetails",
     "recipedetailsscreen",
     "repositoryimpl",
+>>>>>>> 38e330a503476bb1e2e338cd605432f4a092f0c7
     "Schyler",
+    "sidedrawer",
     "Usecase",
     "usecases"
   ]
