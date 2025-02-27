@@ -10,7 +10,7 @@ class RecipeDetailsBloc extends Bloc<RecipeDetailsEvent, RecipeDetailsState> {
   final GetRecipeDetailsUsecase getRecipeDetailsUsecase;
 
   RecipeDetailsBloc({required this.getRecipeDetailsUsecase})
-      : super(RecipeDetailsInitial()) {
+    : super(RecipeDetailsInitial()) {
     on<LoadRecipeDetailEvent>((event, emit) async {
       emit(RecipeDetailLoading());
       final result = await getRecipeDetailsUsecase(event.recipeId);

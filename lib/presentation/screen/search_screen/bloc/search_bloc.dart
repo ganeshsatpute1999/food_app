@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:food_app/core/resources/failures.dart';
 import 'package:food_app/domain/entities/search_recipe_entity.dart';
+import 'package:food_app/core/resources/failures.dart';
 import 'package:food_app/domain/usecases/get_search_recipe_usecase.dart';
 
 part 'search_event.dart';

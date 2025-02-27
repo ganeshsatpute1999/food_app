@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
 import 'package:food_app/presentation/screen/homescreen/bloc/home_bloc.dart';
-import 'package:food_app/presentation/screen/recipedetailsscreen/UI_recipe_screen/recipedetailsscreen.dart';
-import 'package:food_app/presentation/screen/search_screen/Ui_search_screen/search_screen.dart';
+import 'package:food_app/presentation/screen/recipedetailsscreen/UI/recipedetailsscreen.dart';
+import 'package:food_app/presentation/screen/search_screen/Ui/search_screen.dart';
 import 'package:food_app/presentation/screen/search_screen/bloc/search_bloc.dart';
 import 'package:food_app/presentation/widgets/bottom_navigation_bar_widget.dart';
 import 'package:food_app/presentation/widgets/drawer_widgets.dart';
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Recipe List
+          
             Expanded(
               child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {

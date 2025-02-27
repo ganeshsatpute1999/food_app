@@ -18,7 +18,7 @@ class SearchRecipeRemoteDataSourceImpl implements SearchRecipeRemoteDataSource {
         "https://api.spoonacular.com/recipes/complexSearch",
         queryParameters: {
           "query": query,
-          "apiKey": "df35d600da754678b7d8619cad0144e7",
+          "apiKey": "959c4acf395b448c832618e4ceeafc75",
         },
       );
 
