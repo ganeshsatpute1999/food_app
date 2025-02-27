@@ -16,8 +16,8 @@ class RecipeRemoteDataSourceImpl implements FavoritesRecipeRemoteDataSource {
   @override
   Future<List<FavoritesRecipeModel>> getFavoriteRecipes() async {
     final response = await dio.get('/favorites');
-   return (response.data as List)
-        .map((json) => FavoritesRecipeModel.fromJson(json)) // ✅ Fixed
+    return (response.data as List)
+        .map((json) => FavoritesRecipeModel.fromJson(json))
         .toList();
   }
 

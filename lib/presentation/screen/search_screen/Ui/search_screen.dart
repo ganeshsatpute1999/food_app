@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
-import 'package:food_app/presentation/screen/recipedetailsscreen/UI_recipe_screen/recipedetailsscreen.dart';
+import 'package:food_app/presentation/screen/recipe_details_screen/UI/recipedetailsscreen.dart';
 import 'package:food_app/presentation/screen/search_screen/bloc/search_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -13,16 +13,18 @@ class SearchScreen extends StatelessWidget {
       create: (context) => locator<SearchBloc>(),
       child: Builder(
         builder: (context) {
+          // ignore: no_leading_underscores_for_local_identifiers
           final TextEditingController _searchController =
               TextEditingController();
 
           return Scaffold(
+            backgroundColor: Colors.orangeAccent.shade100,
             appBar: AppBar(
               title: const Text(
                 "Search Recipes",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.orangeAccent.shade100,
               elevation: 1,
               centerTitle: true,
             ),
@@ -32,7 +34,7 @@ class SearchScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 255, 250, 209),
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
                         BoxShadow(
@@ -46,28 +48,35 @@ class SearchScreen extends StatelessWidget {
                       controller: _searchController,
                       onChanged: (query) {
                         if (query.isNotEmpty) {
-                          context
-                              .read<SearchBloc>()
-                              .add(SearchRecipesEvent(query));
+                          context.read<SearchBloc>().add(
+                            SearchRecipesEvent(query),
+                          );
                         }
                       },
                       decoration: InputDecoration(
                         hintText: "Search recipes...",
-                        prefixIcon:
-                            const Icon(Icons.search, color: Colors.black54),
-                        suffixIcon: _searchController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.clear,
-                                    color: Colors.black54),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  FocusScope.of(context).unfocus();
-                                },
-                              )
-                            : null,
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.black54,
+                        ),
+                        suffixIcon:
+                            _searchController.text.isNotEmpty
+                                ? IconButton(
+                                  icon: const Icon(
+                                    Icons.clear,
+                                    color: Colors.black54,
+                                  ),
+                                  onPressed: () {
+                                    _searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                )
+                                : null,
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
+                          vertical: 15,
+                          horizontal: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -83,9 +92,10 @@ class SearchScreen extends StatelessWidget {
                             child: Text(
                               "No recipes found!",
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54,
+                              ),
                             ),
                           );
                         }
@@ -95,7 +105,7 @@ class SearchScreen extends StatelessWidget {
                           itemCount: state.recipes.length,
                           itemBuilder: (context, index) {
                             final recipe = state.recipes[index];
-                           // print(recipe.image);
+                            // print(recipe.image);
                             return Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -124,17 +134,23 @@ class SearchScreen extends StatelessWidget {
                                 title: Text(
                                   recipe.title,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 subtitle: Text("Recipe ID: ${recipe.id}"),
-                                trailing: const Icon(Icons.arrow_forward_ios,
-                                    size: 18, color: Colors.black54),
+                                trailing: const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 18,
+                                  color: Colors.black54,
+                                ),
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RecipeDetailScreen(
-                                          recipeId: recipe.id),
+                                      builder:
+                                          (context) => RecipeDetailScreen(
+                                            recipeId: recipe.id,
+                                          ),
                                     ),
                                   );
                                 },

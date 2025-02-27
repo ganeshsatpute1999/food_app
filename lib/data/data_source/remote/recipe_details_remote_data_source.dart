@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:food_app/core/network/dio_client.dart';
 import 'package:food_app/data/models/recipe_details_model.dart';
 
 abstract class RecipeDetailsRemoteDataSource {
@@ -7,15 +7,18 @@ abstract class RecipeDetailsRemoteDataSource {
 
 class RecipeDetailsRemoteDataSourceImpl
     implements RecipeDetailsRemoteDataSource {
-  final Dio _dio;
+  final DioClient _dioClient;
+  final String _apiKey = "959c4acf395b448c832618e4ceeafc75";
 
-  RecipeDetailsRemoteDataSourceImpl(this._dio);
+  RecipeDetailsRemoteDataSourceImpl(this._dioClient);
 
   @override
   Future<RecipeDetailsModel> getRecipeDetail(int recipeId) async {
-    final response = await _dio.get(
-      'https://api.spoonacular.com/recipes/$recipeId/information?apiKey=df35d600da754678b7d8619cad0144e7',
+    final response = await _dioClient.dio.get(
+      '/recipes/$recipeId/information',
+      queryParameters: {'apiKey': _apiKey},
     );
+
     return RecipeDetailsModel.fromJson(response.data);
   }
 }
