@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/injection.dart';
 import 'package:food_app/presentation/screen/login_screen/ui/login_screen.dart';
 
-Future<void> main() async {
+void main() async {
   await init();
   runApp(const MyApp());
 }
@@ -16,38 +16,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Future<void> main() async {
-//   await init();
-//   runApp(BlocProvider(
-//     create: (context) => locator<LoginBloc>(),
-//     child: MyApp(),
-//   ));
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: LoginScreen(),
-//     );
-//   }
-// }
-
-// Future<void> main() async {
-//   await init();
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: SignUpScreen(),
-//     );
-//   }
-// }

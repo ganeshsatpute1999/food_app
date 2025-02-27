@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:food_app/core/network/dio_client.dart';
 import 'package:food_app/core/network/firebase_client.dart';
+import 'package:food_app/data/data_source/remote/favorites_remote_datasource.dart';
 import 'package:food_app/data/data_source/remote/recipe_details_remote_data_source.dart';
 import 'package:food_app/data/data_source/remote/search_recipe_remote_datasource.dart';
 import 'package:food_app/data/data_source/remote/similar_recipe_remote_data_source.dart';
@@ -13,6 +15,7 @@ import 'package:food_app/domain/repository/search_recipe_repository.dart';
 import 'package:food_app/domain/repository/similar_recipe_repository.dart';
 import 'package:food_app/domain/repository/user_repository.dart';
 import 'package:food_app/domain/usecases/add_user_usecase.dart';
+
 import 'package:food_app/domain/usecases/get_recipe_details_usecase.dart';
 import 'package:food_app/domain/usecases/get_search_recipe_usecase.dart';
 import 'package:food_app/domain/usecases/get_similar_recipe_usecase.dart';
@@ -55,39 +58,37 @@ Future<void> init() async {
     () => SimilarRecipeRepositoryImpl(locator()),
   );
 
+  //  Remote Data Sources
   locator.registerLazySingleton<SimilarRecipeRemoteDataSource>(
-    () => SimilarRecipeRemoteDataSourceImpl(locator()),
-  );
-
-  // Ganesh
+      () => SimilarRecipeRemoteDataSourceImpl(locator()));
   locator.registerLazySingleton<RecipeDetailsRemoteDataSource>(
-    () => RecipeDetailsRemoteDataSourceImpl(locator()),
-  );
+      () => RecipeDetailsRemoteDataSourceImpl(locator()));
+  locator.registerLazySingleton<SearchRecipeRemoteDataSource>(
+      () => SearchRecipeRemoteDataSourceImpl(locator()));
 
+  //  Repository Implementations
+  locator.registerLazySingleton<SimilarRecipeRepository>(
+      () => SimilarRecipeRepositoryImpl(locator()));
   locator.registerLazySingleton<RecipeDetailsRepository>(
-    () => RecipeDetailsRepositoryImpl(locator()),
-  );
+      () => RecipeDetailsRepositoryImpl(locator()));
+  locator.registerLazySingleton<SearchRecipeRepository>(
+      () => SearchRecipeRepositoryImpl(locator()));
 
+  //  Use Cases
+  locator.registerLazySingleton(() => GetSimilarRecipeUsecase(locator()));
   locator.registerLazySingleton(() => GetRecipeDetailsUsecase(locator()));
-
-  locator.registerFactory(
-    () => RecipeDetailsBloc(
-      getRecipeDetailsUsecase: locator<GetRecipeDetailsUsecase>(),
-    ),
-  );
-
-  locator.registerFactory(
-    () =>
-        SearchBloc(getSearchRecipesUsecase: locator<GetSearchRecipesUsecase>()),
-  );
-
   locator.registerLazySingleton(() => GetSearchRecipesUsecase(locator()));
 
-  locator.registerLazySingleton<SearchRecipeRepository>(
-    () => SearchRecipeRepositoryImpl(locator()),
-  );
+  //  BLoC Registration
+  locator.registerFactory(() => HomeBloc(locator()));
+  locator.registerFactory(() => RecipeDetailsBloc(
+      getRecipeDetailsUsecase: locator<GetRecipeDetailsUsecase>()));
 
-  locator.registerLazySingleton<SearchRecipeRemoteDataSource>(
-    () => SearchRecipeRemoteDataSourceImpl(locator()),
-  );
+  locator.registerFactory(() =>
+      SearchBloc(getSearchRecipesUsecase: locator<GetSearchRecipesUsecase>()));
+
+  locator.registerLazySingleton<FavoritesRecipeRemoteDataSource>(
+      () => RecipeRemoteDataSourceImpl(locator<Dio>()));
+
+  
 }
