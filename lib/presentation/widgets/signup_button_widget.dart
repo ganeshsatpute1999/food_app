@@ -77,6 +77,14 @@ class SignupButtonWidget extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
         );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Account Created Successfully!'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ),
+        );
       },
       child: const Text(
         "Sign Up",
