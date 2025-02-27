@@ -11,7 +11,7 @@ abstract class SimilarRecipeRemoteDataSource {
 
 class SimilarRecipeRemoteDataSourceImpl extends SimilarRecipeRemoteDataSource {
   final DioClient _dioClient;
-  final String _apiKey = "ba29c5a5826045aba900d1951f71619c";
+  final String _apiKey = "959c4acf395b448c832618e4ceeafc75";
 
   SimilarRecipeRemoteDataSourceImpl(this._dioClient);
 
@@ -23,7 +23,7 @@ class SimilarRecipeRemoteDataSourceImpl extends SimilarRecipeRemoteDataSource {
         "725538",
         "785538",
         "512538",
-        "209128"
+        "209128",
       ];
       final Random random = Random();
 
@@ -34,9 +34,10 @@ class SimilarRecipeRemoteDataSourceImpl extends SimilarRecipeRemoteDataSource {
         queryParameters: {'apiKey': _apiKey},
       );
       if (response.data != null) {
-        final similarRecipe = (response.data as List).map((data) {
-          return SimilarRecipeModel.fromJson(data);
-        }).toList();
+        final similarRecipe =
+            (response.data as List).map((data) {
+              return SimilarRecipeModel.fromJson(data);
+            }).toList();
         return DataSuccess(similarRecipe);
       }
       return DataSuccess([]);

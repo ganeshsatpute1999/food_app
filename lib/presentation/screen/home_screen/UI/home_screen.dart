@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/injection.dart';
-import 'package:food_app/presentation/screen/collections_screen/UI/collections_screen.dart';
+import 'package:food_app/presentation/screen/favorites_screen/UI/favorites_screen.dart';
 import 'package:food_app/presentation/screen/home_screen/bloc/home_bloc.dart';
 import 'package:food_app/presentation/screen/profile_screen/UI/profile_screen.dart';
-import 'package:food_app/presentation/screen/sidedrawer/UI/side_drawer_screen.dart';
+import 'package:food_app/presentation/screen/recipe_details_screen/UI/recipedetailsscreen.dart';
+import 'package:food_app/presentation/screen/search_screen/Ui/search_screen.dart';
+import 'package:food_app/presentation/widgets/side_drawer_widget.dart';
 import 'package:food_app/presentation/widgets/bottom_navigation_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,16 +25,51 @@ class HomeScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(20),
-                child: SearchBar(
-                  backgroundColor:
-                      WidgetStatePropertyAll<Color>(Colors.orangeAccent),
-                  leading: Icon(Icons.search),
-                  padding: WidgetStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 255, 250, 209),
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.search, color: Colors.black54),
+                        SizedBox(width: 10),
+                        Text(
+                          "Search recipes...",
+                          style: TextStyle(color: Colors.black54, fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
+                // SearchBar(
+                //   backgroundColor: WidgetStatePropertyAll<Color>(
+                //     Colors.orangeAccent,
+                //   ),
+                //   leading: Icon(Icons.search),
+                //   padding: WidgetStatePropertyAll<EdgeInsets>(
+                //     EdgeInsets.symmetric(horizontal: 16.0),
+                //   ),
+                // ),
               ),
               const Padding(
                 padding: EdgeInsets.all(20.0),
@@ -47,12 +84,18 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     // ignore: no_leading_underscores_for_local_identifiers
                     final _similarRecipe = similarRecipe[index];
+                    // String image = '';
+                    // if (_similarRecipe.id == 1055614) {
+                    //   image =
+                    //       'https://img.spoonacular.com/recipes/639769-556x370.jpg';
+                    // }
                     return ListTile(
-                      title: Text('Recipe ID: ${_similarRecipe.id}'),
+                      // title: Text('Recipe ID: ${_similarRecipe.id}'),
                       subtitle: Card(
                         margin: const EdgeInsets.all(10),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                         clipBehavior: Clip.hardEdge,
                         elevation: 20,
                         child: Stack(
@@ -60,10 +103,12 @@ class HomeScreen extends StatelessWidget {
                             Hero(
                               tag: _similarRecipe.id,
                               child: FadeInImage(
-                                placeholder: const NetworkImage(
-                                    'https://img.spoonacular.com/recipes/716429-556x370.jpg'),
-                                image: const NetworkImage(
-                                    'https://img.spoonacular.com/recipes/716429-556x370.jpg'),
+                                placeholder: NetworkImage(
+                                  'https://img.spoonacular.com/recipes/639769-556x370.jpg',
+                                ),
+                                image: NetworkImage(
+                                  'https://img.spoonacular.com/recipes/639769-556x370.jpg',
+                                ),
                                 fit: BoxFit.cover,
                                 height: 200,
                                 width: double.infinity,
@@ -76,7 +121,9 @@ class HomeScreen extends StatelessWidget {
                               child: Container(
                                 color: Colors.black54,
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 40),
+                                  vertical: 5,
+                                  horizontal: 40,
+                                ),
                                 child: Column(
                                   children: [
                                     Text(
@@ -90,10 +137,21 @@ class HomeScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => RecipeDetailScreen(
+                                  recipeId: _similarRecipe.id,
+                                ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -106,7 +164,7 @@ class HomeScreen extends StatelessWidget {
         return const SizedBox();
       },
     ),
-    const CollectionsScreen(),
+    FavoritesScreen(num: 0,),
   ];
 
   @override
@@ -128,7 +186,7 @@ class HomeScreen extends StatelessWidget {
 
           return Scaffold(
             backgroundColor: Colors.orangeAccent.shade100,
-            drawer: const SideDrawer(),
+            drawer: const SideDrawerWidget(),
             appBar: AppBar(
               backgroundColor: Colors.orangeAccent.shade100,
               title: Text(heading),
@@ -153,9 +211,10 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: selectedIndex == 0
-                ? pages[0]
-                : pages[1], // Ensure correct page is displayed
+            body:
+                selectedIndex == 0
+                    ? pages[0]
+                    : pages[1], // Ensure correct page is displayed
             bottomNavigationBar: BottomNavigationWidget(selectedIndex),
           );
         },
@@ -165,7 +224,31 @@ class HomeScreen extends StatelessWidget {
 }
 
 
-
+// Container(
+//                   padding: const EdgeInsets.symmetric(horizontal: 15),
+//                   height: 45,
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                     borderRadius: BorderRadius.circular(25),
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: Colors.grey,
+//                         blurRadius: 5,
+//                         offset: const Offset(0, 3),
+//                       ),
+//                     ],
+//                   ),
+//                   child: const Row(
+//                     children: [
+//                       Icon(Icons.search, color: Colors.black54),
+//                       SizedBox(width: 10),
+//                       Text(
+//                         "Search recipes...",
+//                         style: TextStyle(color: Colors.black54, fontSize: 16),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
 
 
 

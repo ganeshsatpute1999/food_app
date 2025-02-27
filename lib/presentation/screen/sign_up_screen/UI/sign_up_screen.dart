@@ -12,6 +12,10 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  final ValueNotifier<String?> nameError = ValueNotifier(null);
+  final ValueNotifier<String?> emailError = ValueNotifier(null);
+  final ValueNotifier<String?> passwordError = ValueNotifier(null);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -51,20 +55,20 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        TextField(
-                            controller: emailController,
-                            decoration:
-                                const InputDecoration(labelText: 'Email')),
-                        const SizedBox(height: 10),
-                        TextField(
+                        _buildTextField(
                             controller: nameController,
-                            decoration:
-                                const InputDecoration(labelText: 'Name')),
+                            label: 'Name',
+                            errorNotifier: nameError),
                         const SizedBox(height: 10),
-                        TextField(
+                        _buildTextField(
+                            controller: emailController,
+                            label: 'Email',
+                            errorNotifier: emailError),
+                        const SizedBox(height: 10),
+                        _buildTextField(
                             controller: passwordController,
-                            decoration:
-                                const InputDecoration(labelText: 'Password'),
+                            label: 'Password',
+                            errorNotifier: passwordError,
                             obscureText: true),
                         const SizedBox(height: 20),
                       ],
@@ -75,26 +79,27 @@ class SignUpScreen extends StatelessWidget {
                     emailController: emailController,
                     nameController: nameController,
                     passwordController: passwordController,
+                    nameError: nameError,
+                    emailError: emailError,
+                    passwordError: passwordError,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Already have an account?',
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
+                        style: TextStyle(fontSize: 17),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen())),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        ),
                         child: const Text(
                           'Login...',
-                          style: TextStyle(
-                            fontSize: 17,
-                          ),
+                          style: TextStyle(fontSize: 17),
                         ),
                       ),
                     ],
@@ -107,7 +112,43 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required ValueNotifier<String?> errorNotifier,
+    bool obscureText = false,
+  }) {
+    return ValueListenableBuilder<String?>(
+      valueListenable: errorNotifier,
+      builder: (context, errorText, child) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: controller,
+              obscureText: obscureText,
+              decoration: InputDecoration(
+                labelText: label,
+                border: const OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: errorText == null ? Colors.grey : Colors.red),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: errorText == null ? Colors.blue : Colors.red),
+                ),
+                errorText: errorText,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+
 
 // class SignUpScreen extends StatelessWidget {
 //   SignUpScreen({super.key});

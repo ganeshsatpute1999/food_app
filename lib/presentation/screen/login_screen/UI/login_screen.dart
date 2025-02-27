@@ -40,9 +40,7 @@ class LoginScreen extends StatelessWidget {
                   const Text(
                     "Login to continue enjoying delicious meals",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
+                    style: TextStyle(color: Colors.black),
                   ),
                   const SizedBox(height: 32),
                   Container(
@@ -64,8 +62,10 @@ class LoginScreen extends StatelessWidget {
                           controller: emailController,
                           decoration: InputDecoration(
                             labelText: 'Email',
-                            prefixIcon:
-                                const Icon(Icons.email, color: Colors.orange),
+                            prefixIcon: const Icon(
+                              Icons.email,
+                              color: Colors.orange,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -77,8 +77,10 @@ class LoginScreen extends StatelessWidget {
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon:
-                                const Icon(Icons.lock, color: Colors.orange),
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                              color: Colors.orange,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -91,7 +93,8 @@ class LoginScreen extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
+                                  builder: (context) => HomeScreen(),
+                                ),
                               );
                             } else if (state is LoginFailure) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -127,7 +130,8 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                            builder: (context) => SignUpScreen(),
+                          ),
                         ),
                         child: const Text(
                           'Create One...',

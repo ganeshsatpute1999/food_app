@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/presentation/screen/favorites_screen/UI/favorites_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -38,19 +39,19 @@ class ProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Row(
                       children: [
-                        Icon(Icons.email, color: Colors.orange),
+                        Icon(Icons.account_box_rounded, color: Colors.orange),
                         SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Email',
+                              'Name',
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text('hrishikeshkedar@gmail.com'),
+                            Text('Hrishikesh'),
                           ],
                         ),
                       ],
@@ -66,23 +67,35 @@ class ProfileScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      Icon(Icons.key_outlined, color: Colors.orange),
+                      Icon(Icons.email, color: Colors.orange),
                       SizedBox(width: 20),
-                      Text(
-                        'Change Password',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Email',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('hrishikeshkedar@gmail.com'),
+                        ],
                       ),
-                      Spacer(),
-                      Icon(Icons.navigate_next),
                     ],
                   ),
                 ),
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => FavoritesScreen(num: 1),
+                  ),
+                );
+              },
               title: Card(
                 color: const Color.fromARGB(255, 255, 250, 209),
                 child: Padding(

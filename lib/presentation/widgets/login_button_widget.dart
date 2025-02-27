@@ -17,9 +17,7 @@ class LoginButtonWidget extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.orange,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.symmetric(vertical: 14),
         minimumSize: const Size(double.infinity, 50),
       ),
@@ -27,18 +25,24 @@ class LoginButtonWidget extends StatelessWidget {
         final email = emailController.text.trim();
         final password = passwordController.text.trim();
 
+        if (email.isEmpty || password.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('All fields are required!'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return; // Stop further execution
+        }
+
         if (email.isNotEmpty && password.isNotEmpty) {
-          context.read<LoginBloc>().add(
-                LoginUserEvent(email, password),
-              );
+          context.read<LoginBloc>().add(LoginUserEvent(email, password));
         }
       },
       child: const Text(
         'Login',
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.white,
-        ),
+        style: TextStyle(fontSize: 18, color: Colors.white),
       ),
     );
   }
