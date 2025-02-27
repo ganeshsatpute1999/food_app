@@ -17,7 +17,7 @@ class LogoutButtonWidget extends StatelessWidget{
               );
               context.read<LoginBloc>().add(
                     LogoutEvent(),
-                  ); // Dispatch Logout
+                  ); 
             },
             child: const Text(
               'Logout',
