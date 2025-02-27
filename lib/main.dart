@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/injection.dart';
-import 'package:food_app/presentation/screen/homescreen/UI/home_screen.dart';
+import 'package:food_app/presentation/screen/login_screen/ui/login_screen.dart';
 
 void main() async {
   await init();
@@ -12,13 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Food App',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const HomeScreen(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
+
